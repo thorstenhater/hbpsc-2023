@@ -1,0 +1,64 @@
+\documentclass{beamer}
+
+\usepackage[style=numeric,maxnames=2]{biblatex}
+\usepackage{minted}
+\usepackage{tikz}
+
+\definecolor{lightgray}{gray}{0.9}
+\definecolor{mediumslateblue}{HTML}{7B68EE}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}} % chktex 36
+
+\usepackage[orientation=portrait,size=a1,scale=1.0]{beamerposter}
+\usetheme{JuelichPoster}
+
+\ExecuteBibliographyOptions{%
+  sorting=nyt,
+  bibwarn=true,
+  isbn=false,
+  url=true%
+}
+\addbibresource{references.bib}
+
+\setbeamertemplate{partner1}{\includegraphics{img/cscs}}
+\setbeamertemplate{partner2}{\includegraphics{img/HBP_logo}}
+
+\begin{document}
+\begin{frame}[t, fragile]
+  \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
+  \framesubtitle{Generating High Performance Simulations from a Portable Data Format using Arbor\\
+    \tiny{T. Hater, B. Huisman, L. Landsmeer (Forschungszentrum Jülich)}}
+  \begin{columns}[onlytextwidth,T]
+    \begin{column}{0.65\textwidth}
+      Computational neuroscience is experiencing a steady growth in available
+      simulation tools applicable to morphologically detailed cell descriptions
+      \cite{eden, neurogpu, carl, brian, arb, nrn}. However, the development of
+      models that are actually portable between simulators lags behind. NeuroML2
+      is one of the few comprehensive approaches to portably describing whole
+      simulations, but its reference implementation lacks in performance and
+      scalability to larger simulations \cite{nml2}. Our goal is to enable
+      Arbor, a modern, performance-portable library for simulating
+      morphologically detailed neurons to consume models in NeuronML2. We
+      present \texttt{nmlcc}, a tool to generate optimised, full scale
+      simulations from a description in NeuroML2 \cite{nmlcc}. It produces
+      bespoke dynamics tailored to the input, resulting in performance metrics
+      comparable to hand-optimized code. Through Arbor, the generated simulation
+      package is able to utilize modern hardware, including large-scale GPU
+      clusters, scaling to millions of cells \cite{arb}. As a case study, we
+      show how a single cell simulation based on \cite{Hay} was ported to Arbor
+      using \texttt{nmlcc}. Furthermore, we analyse the runtime performance of
+      the produced model.
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \vspace*{-1ex}
+      \begin{block}{Where to find us}
+        \begin{description}
+          \item[Website] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
+          \item[Source code] \href{https://github.com/arbor-sim/arbor}{github.com/arbor-sim/arbor}
+          \item[Documentation] \href{https://arbor.readthedocs.io}{arbor.readthedocs.io}
+          \item[Contact] \href{mailto:arbor-sim@fz-juelich.de}{arbor-sim@fz-juelich.de}
+        \end{description}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+\end{document}

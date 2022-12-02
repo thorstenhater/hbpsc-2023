@@ -1,0 +1,159 @@
+\newlength\JuelichPosterLogoHeight
+\newlength\JuelichPosterMinimumLogoHeight
+\setlength\JuelichPosterMinimumLogoHeight{4.8mm}
+\newlength\JuelichPosterY
+\newlength{\JuelichPosterImageWidth}
+\newlength{\JuelichPosterPartnerWidth}
+
+%------------------------------------------------
+% Logo
+%------------------------------------------------
+% Die Höhe des Logos beträgt bei Standardformaten 8% der Höhe
+% bzw. Breite der kurzen Formatseite
+\ifnum\paperheight>\paperwidth
+  % Hochformat  =>  Logo-Höhe = 8% der Papierbreite
+  \setlength\JuelichPosterLogoHeight{0.08\paperwidth}
+  \setlength\JuelichPosterY{0.03\paperwidth}
+\else
+  % Querformat  =>  Logo-Höhe = 8% der Papierhöhe
+  \setlength\JuelichPosterLogoHeight{0.08\paperheight}
+  \setlength\JuelichPosterY{0.03\paperheight}
+\fi
+
+\ifdim\JuelichPosterLogoHeight<\JuelichPosterMinimumLogoHeight
+  \setlength\JuelichPosterLogoHeight\JuelichPosterMinimumLogoHeight
+\fi
+
+\settowidth{\JuelichPosterImageWidth}{\includegraphics[totalheight=1.6\JuelichPosterY]{Logo_FZJ.pdf}}
+\setlength{\JuelichPosterPartnerWidth}{\paperwidth}
+\addtolength{\JuelichPosterPartnerWidth}{-3.6\JuelichPosterY}
+\addtolength{\JuelichPosterPartnerWidth}{-\JuelichPosterImageWidth}
+
+
+
+\defbeamertemplate*{headline}{JuelichPoster}
+{%
+  \vskip\JuelichPosterY%
+  \hskip\JuelichPosterY%
+  \begin{beamercolorbox}[wd=\JuelichPosterPartnerWidth,ht=1.6\JuelichPosterY]{}%fzjblue50}%
+    \ifbeamertemplateempty{partner1}{}{\resizebox{!}{1.6\JuelichPosterY}{\usebeamertemplate*{partner1}}\hspace*{\fill}}%
+    \ifbeamertemplateempty{partner2}{}{\resizebox{!}{1.6\JuelichPosterY}{\usebeamertemplate*{partner2}}\hspace*{\fill}}%
+    \ifbeamertemplateempty{partner3}{}{\resizebox{!}{1.6\JuelichPosterY}{\usebeamertemplate*{partner3}}\hspace*{\fill}}%
+    \ifbeamertemplateempty{partner4}{}{\resizebox{!}{1.6\JuelichPosterY}{\usebeamertemplate*{partner4}}\hspace*{\fill}}%
+  \end{beamercolorbox}%
+  \hskip1.6\JuelichPosterY% Schutzzone
+  \includegraphics[totalheight=1.6\JuelichPosterY]{Logo_FZJ.pdf}%
+}
+
+%------------------------------------------------
+% Helmholtz Banner
+%------------------------------------------------
+\defbeamertemplate*{helmholtz banner}{}{\translate{HelmholtzBanner}}
+\defbeamertemplate*{footline}{JuelichPoster}
+{%
+  \setbeamercolor{bannercolor}{fg=fzjwhite,bg=fzjblue}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.5\JuelichPosterY,center]{bannercolor}%
+    \vbox{\vfil\resizebox{!}{0.3\JuelichPosterY}{\usebeamertemplate{helmholtz banner}}\vfil}%
+    \vskip0.1\JuelichPosterY%
+  \end{beamercolorbox}%
+  \vskip0.5\JuelichPosterY%
+}
+
+
+%------------------------------------------------
+% Partner-Logos
+%------------------------------------------------
+\defbeamertemplate{partner1}{empty}{}
+\defbeamertemplate{partner2}{empty}{}
+\defbeamertemplate{partner3}{empty}{}
+\defbeamertemplate{partner4}{empty}{}
+
+
+%------------------------------------------------
+% No Navigation Symbols
+%------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+
+
+%------------------------------------------------
+% Appendixblock
+%------------------------------------------------
+\newenvironment<>{appendixblock}{%
+  \nointerlineskip%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \vskip-5.05mm
+  \begin{beamercolorbox}[leftskip=0.35cm,rightskip=1.35cm,%
+                         wd=\the\@tempdima,ht=0.25\paperheight]{block body appendix}%
+    \vbox to0.25\paperheight\bgroup\vfil%
+  }{\vfil\egroup%
+  \end{beamercolorbox}
+  \vskip1ex%
+}
+
+
+%------------------------------------------------
+% Title
+%------------------------------------------------
+\defbeamertemplate*{frametitle}{JuelichPoster}%
+{%
+  \vspace*{2.5ex}
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \vskip2.3mm%
+  \ifnum\paperheight>\paperwidth%orientation=portrait
+    \begin{beamercolorbox}[leftskip=0.35cm,%rightskip=0.35cm,%
+                           wd=\the\@tempdima]{frametitle}
+      {%
+        \vfil%
+        \if@tempswa\else\csname beamer@fte\endcsname\fi%
+        \strut{\vspace*{2.5ex}\usebeamerfont{frametitle}%
+          \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
+                         % width of title-line / scalingfactor
+                         % 0.97tempdima / 1.8 = 0.54tempdima
+        \strut\par%
+        {%
+          \ifx\insertframesubtitle\@empty%
+          \else%
+            {\vskip1ex%
+             \usebeamerfont{framesubtitle}%
+             \usebeamercolor[fg]{framesubtitle}%
+             \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
+                            % width of subtitle-line / scalingfactor
+                            % 0.97tempdima / 1.8 = 0.54tempdima
+             \strut\par}%
+          \fi%
+        }%
+        \vfil%
+      }%
+    \end{beamercolorbox}%
+  \else%
+    \begin{beamercolorbox}[leftskip=0.35cm,%rightskip=0.35cm,%
+                           wd=\the\@tempdima]{frametitle}
+      \vskip1ex%
+      \if@tempswa\else\csname beamer@fte\endcsname\fi%
+      \strut{\vspace*{2.5ex}\usebeamerfont{frametitle}%
+        \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
+                       % width of title-line / scalingfactor
+                       % 0.97tempdima / 1.8 = 0.54tempdima
+      \strut\par%
+      {%
+        \ifx\insertframesubtitle\@empty%
+        \else%
+        {\vskip1ex%
+          \usebeamerfont{framesubtitle}%
+          \usebeamercolor[fg]{framesubtitle}%
+          \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
+                         % width of subtitle-line / scalingfactor
+                         % 0.97tempdima / 1.8 = 0.54tempdima
+          \strut\par
+        }%
+        \fi%
+      }%
+       \vskip1ex
+    \end{beamercolorbox}%
+  \fi%
+}
