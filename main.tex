@@ -33,32 +33,65 @@
       simulation tools applicable to morphologically detailed cell descriptions
       \cite{eden, neurogpu, carl, brian, arb, nrn}. However, the development of
       models that are actually portable between simulators lags behind. NeuroML2
-      is one of the few comprehensive approaches to portably describing whole
-      simulations, but its reference implementation lacks in performance and
-      scalability to larger simulations \cite{nml2}. Our goal is to enable
-      Arbor, a modern, performance-portable library for simulating
-      morphologically detailed neurons to consume models in NeuronML2. We
-      present \texttt{nmlcc}, a tool to generate optimised, full scale
-      simulations from a description in NeuroML2 \cite{nmlcc}. It produces
-      bespoke dynamics tailored to the input, resulting in performance metrics
-      comparable to hand-optimized code. Through Arbor, the generated simulation
-      package is able to utilize modern hardware, including large-scale GPU
-      clusters, scaling to millions of cells \cite{arb}. As a case study, we
-      show how a single cell simulation based on \cite{Hay} was ported to Arbor
-      using \texttt{nmlcc}. Furthermore, we analyse the runtime performance of
-      the produced model.
+      is one of the few comprehensive approaches in this area, but its reference
+      implementation lacks in performance and scalability to larger simulations
+      \cite{nml2}. Our goal is to enable Arbor, a performance-portable
+      library for simulating morphologically detailed neurons to consume NeuronML2
+      models. We present \texttt{nmlcc}, a tool to generate optimised,
+      full scale simulations from a description in NeuroML2 \cite{nmlcc}. It
+      produces bespoke dynamics tailored to the input, resulting in performance
+      metrics comparable to hand-optimized code. Through Arbor, the generated
+      simulation package is able to utilize modern hardware, including
+      large-scale GPU clusters, scaling to millions of cells \cite{arb}. As a
+      case study, we show how a single cell simulation based on \cite{Hay} was
+      ported to Arbor using \texttt{nmlcc}. Furthermore, we analyse the runtime
+      performance of the produced model.
     \end{column}
     \begin{column}{0.3\textwidth}
       \vspace*{-1ex}
       \begin{block}{Where to find us}
         \begin{description}
-          \item[Website] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
-          \item[Source code] \href{https://github.com/arbor-sim/arbor}{github.com/arbor-sim/arbor}
-          \item[Documentation] \href{https://arbor.readthedocs.io}{arbor.readthedocs.io}
-          \item[Contact] \href{mailto:arbor-sim@fz-juelich.de}{arbor-sim@fz-juelich.de}
+          \item[Arbor] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
+          \item[nmlcc] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/nmlcc}
+          \item[Contact] \href{mailto:t.hater@fz-juelich.de}{t.hater@fz-juelich.de}
         \end{description}
       \end{block}
     \end{column}
   \end{columns}
+  % problem statement
+  \vspace*{2ex}
+  \begin{columns}
+    \begin{column}{0.49\textwidth}
+      \textbf{Dynamic Compilation}
+
+      NeuroML2 (NML) constitutes a data language for describing a full neuronal
+      network, including network connectivity, cell morphologies,
+      parametrisation, and ion channel dynamics. NML is defined as a library of
+      LEMS specifications, which can be dynamically extended while building a
+      simulation.
+
+      This constrains our choice of implementation, since we cannot deliver a
+      pre-built set of ion channels as an addition to Arbor, but must be able to
+      synthesise these on demand. On the other hand, having the full simulation
+      available for introspection enables optimisations that go beyond Arbor's
+      builtin capabilities.
+    \end{column}
+    \begin{column}{0.49\textwidth}
+
+    \end{column}
+  \end{columns}
+  % Data flow
+  \vspace*{2ex}
+  \begin{columns}
+    \begin{column}{0.49\textwidth}
+      \textbf{\texttt{nmlcc} at Work}
+
+      \texttt{nmlcc}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+
+    \end{column}
+  \end{columns}
+
 \end{frame}
 \end{document}
