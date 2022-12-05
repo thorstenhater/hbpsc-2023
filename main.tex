@@ -11,6 +11,8 @@
 \usepackage[orientation=portrait,size=a1,scale=1.0]{beamerposter}
 \usetheme{JuelichPoster}
 
+\usetikzlibrary{positioning}
+
 \ExecuteBibliographyOptions{%
   sorting=nyt,
   bibwarn=true,
@@ -84,14 +86,106 @@
   \vspace*{2ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
-      \textbf{\texttt{nmlcc} at Work}
-
-      \texttt{nmlcc}
+      \begin{tikzpicture}
+        % input
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=8cm] (nml) {\verb!<neuroml>!\\\verb!  ...!\\\verb!</neuroml>!};
+        % nmlcc products
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=5cm, below left=3cm and -3.5cm of nml] (mrf) {\verb!mrf/morph-0.nml!\\\verb!mrf/morph-1.nml!};
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=4.5cm, below right=3cm and -3.5cm of nml] (acc) {\verb!acc/cell-0.acc!\\\verb!acc/cell-1.acc!};
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=5cm, right=1cm of acc]   (sim) {\verb!main.py!\\\verb!import arbor as A!};
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=4cm, left=1cm of mrf] (cat) {\verb!cat/hh.mod!\\\verb!cat/leak.mod!};
+        % connections from nml to outputs
+        \node[below=2cm of nml] (h0) {};
+        \draw[ultra thick, minimum size=0pt] (nml.south) -- (h0.center) node[right, pos=0.5]{\verb!nmlcc bundle!};
+        \draw[->, >=stealth, ultra thick, minimum size=0pt] (h0.center) -| (acc.north);
+        \draw[->, >=stealth, ultra thick, minimum size=0pt] (h0.center) -| (sim.north);
+        \draw[->, >=stealth, ultra thick, minimum size=0pt] (h0.center) -| (mrf.north);
+        \draw[->, >=stealth, ultra thick, minimum size=0pt] (h0.center) -| (cat.north);
+        % connection from outputs to sim
+        \node[below=1cm of sim] (h1) {};
+        \draw[ultra thick, ->, >=stealth] (acc.south) |- ([xshift=-10pt, yshift=10pt]h1.center)  -| ([xshift=-10pt]sim.south);
+        \draw[ultra thick, ->, >=stealth] (mrf.south) |- (h1.center) -| (sim.south);
+        \draw[ultra thick, ->, >=stealth] (cat.south) |- ([xshift=10pt, yshift=-10pt]h1.center) node[below, pos=0.75] {read} -| ([xshift=10pt]sim.south);
+      \end{tikzpicture}
     \end{column}
     \begin{column}{0.49\textwidth}
+      \textbf{Dataflow}
 
+      \texttt{nmlcc} consumes NML2 descriptions at the level of individual ion
+      channels, cells -- comprising a morphology, ion channles, and parameter
+      assignments --, and full networks, which include cells, their
+      connectivity, and network-level parameters. The latter subsumes all
+      previous modes and generates an executable Python script to instantiate a
+      simulation in Arbor. This is achieved by turning the components into files
+      in formats Arbor understands and connecting them in Python.
+      \begin{description}
+        \item[Ion channel] Transformed to NMODL;\@ all channels will be bundled and compiled to a
+        shared library that Arbor can hook into.
+        \item[Morphology] Extracted to standalone NML2 morphology files, which Arbor can
+        load natively.
+        \item[Assignments] ACC, Arbor's cable cell serialisation format.
+              Includes passive parameters and ion channel mappings.
+        \item[Connectivity] Stored inside the Python script as dictionaries.
+        \item[Stimuli] Added by the Python script.
+      \end{description}
+
+      \texttt{nmlcc}'s internal data model is not hand-written, instead it will
+      be automatically generated from the schemea files and base libraries
+      included with NML2. This two-phase approach allows us to rapidly adapt to
+      changes in NML2.
     \end{column}
   \end{columns}
+  % Data flow
+  \vspace*{2ex}
+  \begin{columns}
+    \begin{column}{0.49\textwidth}
+      \textbf{Optimisations}
 
+      Arbor's model for building simulations is highly flexible: cell types and
+      their ion channel dynamics are given at runtime. Ion channels can be
+      loaded from shared libraries at start-up. However, this flexibility comes
+      at the cost of missing performance optimisations.
+
+      Since \texttt{nmlcc} can inspect the full simulation, it has extensive
+      potential for optimisation, mainly when dealing with ion channel
+      descriptions. These are one of the two main cost centres in a simulation,
+      the other is solving the cable equation. We perform two central high-level
+      transformations: Specialisation and Combination. Both are designed to
+      expose more optimisations to the NMODL-to-C++ and C++-to-binary compiler.
+
+      We exploit that NML2 provides assignments of the form
+      \verb!(region, channel, parameters)! where
+      \begin{description}
+        \item[\texttt{region}] sub-set of the morphology's segments
+        \item[\texttt{channel}] the ion channel name
+        \item[\texttt{parameters}] a list of key-value pairs to be set on the channel
+      \end{description}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \emph{Specialisation}
+
+      Since NML2 defines ion channels as parametrised templates, we can generate
+      one copy of each assigned channel per region where the parameters have
+      been fixed to their concrete values for this region. This allows for
+      replacing memory accesses by constants and folding multiple constants into
+      one. Then, all operations on these constant values are evaluated and
+      conditionals are replaced by the appropriate branch where possible.
+
+      \vspace*{1ex}
+      \emph{Combination or Super-Mechanisms}
+
+      Using the same information, we can also combine all ion channels added to
+      the same region in to a single one, dubbed a `super-mechanism'. As Arbor's
+      ion channels are implemented as a set of callbacks on a standardised set
+      of parameters, this reduces the amount of functions called and data moved.
+
+      \vspace*{1ex}
+      \emph{General Optimisation of Ion Channels}
+
+      When generating NMODL from NML2 we also apply a series of guidelines we
+      found helpful to achive good performance. These mainly minimise the amount
+      of data movement;\@ an overview can be found in Arbor's documentation.
+    \end{column}
+  \end{columns}
 \end{frame}
 \end{document}
