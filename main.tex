@@ -2,9 +2,14 @@
 
 \usepackage[style=numeric,maxnames=2]{biblatex}
 \usepackage{minted}
+\usemintedstyle{colorful}
+
 \usepackage{tikz}
 
 \definecolor{lightgray}{gray}{0.9}
+\definecolor{arbgrey}{RGB}{84, 84, 84}
+\definecolor{arbred}{RGB}{153, 67, 25}
+\definecolor{arborange}{RGB}{201, 104, 44}
 \definecolor{mediumslateblue}{HTML}{7B68EE}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}} % chktex 36
 
@@ -61,7 +66,9 @@
     \end{column}
   \end{columns}
   % problem statement
-  \vspace*{2ex}
+  \vspace*{1ex}
+  \textcolor{arbgrey}{\rule{\textwidth}{0.5ex}}
+  \vspace*{-1ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
       \textbf{Dynamic Compilation}
@@ -79,11 +86,20 @@
       builtin capabilities.
     \end{column}
     \begin{column}{0.49\textwidth}
-
+\begin{minted}[fontsize=\small]{xml}
+<ionChannelHH id="kChan" conductance="10pS" species="k">
+  <gateHHrates id="n" instances="4">
+    <forwardRate type="HHExpLinearRate" rate="0.1per_ms" midpoint="-55mV" scale="10mV"/>
+    <reverseRate type="HHExpRate" rate="0.125per_ms" midpoint="-65mV" scale="-80mV"/>
+  </gateHHrates>
+</ionChannelHH>
+\end{minted}
     \end{column}
   \end{columns}
   % Data flow
-  \vspace*{2ex}
+  \vspace*{1ex}
+  \textcolor{arbred}{\rule{\textwidth}{0.5ex}}
+  \vspace*{-1ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
       \begin{tikzpicture}
@@ -94,6 +110,7 @@
         \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=4.5cm, below right=3cm and -3.5cm of nml] (acc) {\verb!acc/cell-0.acc!\\\verb!acc/cell-1.acc!};
         \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=5cm, right=1cm of acc]   (sim) {\verb!main.py!\\\verb!import arbor as A!};
         \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=4cm, left=1cm of mrf] (cat) {\verb!cat/hh.mod!\\\verb!cat/leak.mod!};
+        \node[draw, rectangle, rounded corners, ultra thick, color=black!80, text width=6cm, below=1cm of cat] (cso) {\verb!local-catalogue.so!};
         % connections from nml to outputs
         \node[below=2cm of nml] (h0) {};
         \draw[ultra thick, minimum size=0pt] (nml.south) -- (h0.center) node[right, pos=0.5]{\verb!nmlcc bundle!};
@@ -105,14 +122,15 @@
         \node[below=1cm of sim] (h1) {};
         \draw[ultra thick, ->, >=stealth] (acc.south) |- ([xshift=-10pt, yshift=10pt]h1.center)  -| ([xshift=-10pt]sim.south);
         \draw[ultra thick, ->, >=stealth] (mrf.south) |- (h1.center) -| (sim.south);
-        \draw[ultra thick, ->, >=stealth] (cat.south) |- ([xshift=10pt, yshift=-10pt]h1.center) node[below, pos=0.75] {read} -| ([xshift=10pt]sim.south);
+        \draw[ultra thick, ->, >=stealth] (cat.south) -- (cso.north);
+        \draw[ultra thick, ->, >=stealth] ([yshift=0pt]cso.east) -| ([xshift=10pt]sim.south);
       \end{tikzpicture}
     \end{column}
     \begin{column}{0.49\textwidth}
       \textbf{Dataflow}
 
       \texttt{nmlcc} consumes NML2 descriptions at the level of individual ion
-      channels, cells -- comprising a morphology, ion channles, and parameter
+      channels, cells -- comprising a morphology, ion channels, and parameter
       assignments --, and full networks, which include cells, their
       connectivity, and network-level parameters. The latter subsumes all
       previous modes and generates an executable Python script to instantiate a
@@ -136,10 +154,12 @@
     \end{column}
   \end{columns}
   % Data flow
-  \vspace*{2ex}
+  \vspace*{1ex}
+  \textcolor{arborange}{\rule{\textwidth}{0.5ex}}
+  \vspace*{-1ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
-      \textbf{Optimisations}
+      \textbf{Optimisations for Ion Channels}
 
       Arbor's model for building simulations is highly flexible: cell types and
       their ion channel dynamics are given at runtime. Ion channels can be
@@ -150,8 +170,7 @@
       potential for optimisation, mainly when dealing with ion channel
       descriptions. These are one of the two main cost centres in a simulation,
       the other is solving the cable equation. We perform two central high-level
-      transformations: Specialisation and Combination. Both are designed to
-      expose more optimisations to the NMODL-to-C++ and C++-to-binary compiler.
+      transformations: Specialisation and Combination.
 
       We exploit that NML2 provides assignments of the form
       \verb!(region, channel, parameters)! where
@@ -160,6 +179,11 @@
         \item[\texttt{channel}] the ion channel name
         \item[\texttt{parameters}] a list of key-value pairs to be set on the channel
       \end{description}
+
+      Note that the generated channels are processed to C++ and from there to a binary artifact.
+      Further optimisations are applied at each level.
+      Both transforms above are designed to expose more optimisations to the
+      NMODL-to-C++ and C++-to-binary stages.
     \end{column}
     \begin{column}{0.49\textwidth}
       \emph{Specialisation}
@@ -180,7 +204,7 @@
       of parameters, this reduces the amount of functions called and data moved.
 
       \vspace*{1ex}
-      \emph{General Optimisation of Ion Channels}
+      \emph{General Optimisations}
 
       When generating NMODL from NML2 we also apply a series of guidelines we
       found helpful to achive good performance. These mainly minimise the amount

@@ -27,6 +27,9 @@
     "references")
    (LaTeX-add-xcolor-definecolors
     "lightgray"
+    "arbgrey"
+    "arbred"
+    "arborange"
     "mediumslateblue"))
  :latex)
 
