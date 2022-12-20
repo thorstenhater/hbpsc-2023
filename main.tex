@@ -33,7 +33,7 @@
 \begin{frame}[t, fragile]
   \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
   \framesubtitle{Generating High Performance Simulations from a Portable Data Format using Arbor\\
-    \tiny{T. Hater, B. Huisman, L. Landsmeer (Forschungszentrum Jülich)}}
+    \tiny{T. Hater, B. Huisman, L. P. L. Landsmeer (Forschungszentrum Jülich)}}
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.76\textwidth}
       Computational neuroscience is experiencing a steady growth in available
@@ -198,6 +198,18 @@
   \begin{columns}
     \begin{column}{0.49\textwidth}
       \textbf{Performance}
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{./benchmark/barchart.pdf}
+          \caption{Performance comparison across simulators and setups on
+                   simulation of figure 5A from Hay \emph{et al.}.
+                   By default, timestepping with $\Delta t = 0.025ms$
+                   is used, but for NEURON in the CVODE case, we enabled
+                   single-cell optimised adaptive time-stepping.}
+        \label{fig:bar}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.49\textwidth}
     \end{column}
   \end{columns}
   % Development and Future Work.
