@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channelml xmlns="http://morphml.org/channelml/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:meta="http://morphml.org/metadata/schema"
+xsi:schemaLocation="http://morphml.org/channelml/schema http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.0/Level2/ChannelML_v1.8.0.xsd" units="Physiological Units">
+
+    <meta:notes>NeuroML file containing a single Channel description</meta:notes>
+
+    <channel_type name="SK_E2">
+
+        <status value="stable">
+            <meta:contributor>
+                <meta:name>Padraig Gleeson</meta:name>
+            </meta:contributor>
+        </status>
+
+        <meta:notes>Small-conductance, Ca2+ activated K+ current
+            
+Comment from original mod file: 
+: SK-type calcium-activated potassium current
+: Reference : Kohler et al. 1996</meta:notes>
+        
+        <meta:authorList>
+            <meta:modelAuthor>
+                <meta:name>Etay Hay</meta:name>
+            </meta:modelAuthor>
+            <meta:modelTranslator>
+                <meta:name>Padraig Gleeson</meta:name>
+                <meta:institution>UCL</meta:institution>
+                <meta:email>p.gleeson - at - ucl.ac.uk</meta:email>
+            </meta:modelTranslator>
+        </meta:authorList>
+
+        <meta:publication>
+            <meta:fullTitle>Models of Neocortical Layer 5b Pyramidal Cells Capturing a Wide Range of Dendritic and Perisomatic Active Properties,
+            Etay Hay, Sean Hill, Felix Schürmann, Henry Markram and Idan Segev, PLoS Comp Biol 2011</meta:fullTitle>
+            <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/pubmed/21829333</meta:pubmedRef>
+        </meta:publication>
+
+
+        <meta:neuronDBref>
+            <meta:modelName>K channels</meta:modelName>
+            <meta:uri>http://senselab.med.yale.edu/neurondb/channelGene2.aspx#table3</meta:uri>
+        </meta:neuronDBref>
+        
+        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="36" default_erev="-85">
+            
+            <conc_dependence name="Calcium" ion="ca" charge="2" variable_name="ca_conc" min_conc="0" max_conc="0.001"/>
+
+            <gate name="z" instances="1">
+                <closed_state id="z0"/>
+                <open_state id="z"/>
+                     
+                <time_course name="tau" from="z0" to="z" expr_form="generic" expr="1" />
+
+                <steady_state name="inf" from="z0" to="z" expr_form="generic" expr="1/(1+(4.3e-10/ca_conc)^4.8)"/>
+                    
+            </gate>
+        </current_voltage_relation>
+        
+    </channel_type>
+</channelml>

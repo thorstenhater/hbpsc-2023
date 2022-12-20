@@ -1,0 +1,9 @@
+NEURON {
+  SUFFIX L5PC_basal_dends
+  NONSPECIFIC_CURRENT i
+}
+
+BREAKPOINT {
+  i = 0.00004670000076293945 * (90 + v)
+}
+

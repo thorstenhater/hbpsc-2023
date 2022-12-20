@@ -1,0 +1,8 @@
+# Report of running simulation with NEURON -- VERSION 8.2.1 HEAD (c1590692) 2022-08-09
+Simulator=NEURON
+SimulatorVersion=NEURON -- VERSION 8.2.1 HEAD (c1590692) 2022-08-09
+SimulationFile=/home/llandsmeer/repos/llandsmeer/Layer5Comparison/scripts/run-neuron-pynml.py
+PythonVersion=3.10.6 (main, Nov  2 2022, 18:53:38) [GCC 11.3.0]
+NeuroMLExportVersion=1.9.0
+SimulationSeed=123456789
+Hostname=spectre
