@@ -67,7 +67,7 @@ plt.xticks(np.arange(0, 45, 10))
 plt.yticks(xmid, ['Arbor', 'EDEN', 'NEURON'], rotation=90, va='center')
 plt.tick_params(axis='y', which='both', left=False)
 # plt.tick_params(axis='x', which='both', bottom=False)
-plt.barh(x, rt, 1, color=color)
+plt.barh(x, rt, 1.01, color=color)
 plt.xlabel('Simulation time (s)')
 
 ax = plt.gca()
@@ -84,5 +84,6 @@ ax.spines['left'].set_visible(False)
 # ix.plot(x, y, color='black')
 
 plt.savefig('./barchart.svg', bbox_inches = 'tight', pad_inches = 0)
+plt.savefig('./barchart.pdf', bbox_inches = 'tight', pad_inches = 0)
 
 plt.show() 
