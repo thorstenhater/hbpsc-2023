@@ -210,6 +210,47 @@
       \end{figure}
     \end{column}
     \begin{column}{0.49\textwidth}
+        \emph{Setup}
+        We compare performance using
+            the Layer 5 pyramidial cell model of Hay \emph{et al.}
+            across NeuroML supporting simulators NEURON, EDEN and Arbor.
+        The original cell model is tuned for simulation with NEURON,
+            yet the provided NeuroML description lends itself for
+            readily conversion to EDEN, Arbor, and again NEURON (via jnml).
+        For performance comparison,
+            we selected figure 4b among the available simulation setups
+            in the Hay \emph{et al.} repository,
+            because this example had the highest compute density
+            (Fig.~\ref{fig:bar}).
+        All simulations are performed on the JUWELS cluster,
+            on a single Intel Xeon Platinum 8168 CPU running at 2.7 GHz.
+
+        \emph{Results}
+        Among fixed time stepping methods (all except CVODE),
+            Arbor is a clear winner for both jnml converted model
+            and our nmlcc compiler output.
+        NEURONs adaptive timestepping method (CVODE)
+            leads to a significant speedup in comparison
+            to fixed timestepping in NEURON,
+            but is still slower than Arbor's 
+            fixed timestepping method.
+        This is in part due to the transient heavy simulation setup,
+            for single spikes in long simulation times CVODE
+            would outperform Arbor by a small amount.
+        We think that this is a boundary case that should not be observed
+            in realistic simulation scenarios.
+
+        % nmlcc is written in a way that optimises for SIMD performance,
+        %     and optimal CPU usage by writing nearly branchless code.
+        nmlcc allows for the merging of channel mechanisms in the same
+        model region to a single \emph{super-mechanism} with constants
+        folded in.
+        We show that this brings another 10\% speedup over
+        regular translation.
+
+        Importantly, the nmlcc method is a fully automatic method,
+        yet still manages to outperform jnml hand-edited Arbor conversion
+        and Hay \emph{et al.} optimized model implementation.
     \end{column}
   \end{columns}
   % Development and Future Work.
