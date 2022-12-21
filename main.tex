@@ -225,17 +225,18 @@
       Among fixed time stepping methods, Arbor is the clear winner for both jnml
       converted model and our nmlcc compiler output. NEURONs adaptive
       timestepping method leads to a significant speedup in comparison to fixed
-      timestepping, but is still slower than Arbor's fixed
-      timestepping method. This is in part due to the transient heavy simulation
-      setup, for single spikes in long simulation times CVODE would outperform
-      Arbor by a small amount. We think that this is a boundary case that should
-      not be observed in realistic simulation scenarios; especially in network
-      simulations, as CVODE does not allow for incoming spikes. We show that the
-      merging of channel mechanisms yields another 10\% speedup over regular
-      translation.
+      timestepping, but is still slower than Arbor's fixed timestepping method.
+      This is in part due to the transient heavy simulation setup, for single
+      spikes in long simulation times CVODE would outperform Arbor by a small
+      amount. We think that this is a boundary case that should not be observed
+      in realistic simulation scenarios; especially in network simulations, as
+      CVODE does not allow for incoming spikes. We show that the merging of
+      channel mechanisms yields another 10\% speedup over regular translation.
+      EDEN allows for direct consumption of NML2 models, but does not achieve
+      performance comparable to Arbor.
 
       Importantly, the nmlcc method is fully automatic, yet still manages to
-      outperform jnml Arbor conversion and Hay \emph{et al.} optimized model
+      outperform jnml Arbor conversion and the Hay \emph{et al.} optimized model
       implementation. Arbor nmlcc faithfully reproduces expected critical firing
       behaviour from Hay \emph{et al.} figure 5a (right).
     \end{column}
