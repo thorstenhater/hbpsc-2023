@@ -29,11 +29,11 @@ rtmin = rt.min()
 rtmax = rt.max()
 
 x = [
-    9,
-    8,
-    7,
+    9-1.0,
+    8-1.0,
+    7-1.0,
 
-    5,
+    5-0.5,
 
     3,
     2,
@@ -41,9 +41,9 @@ x = [
 ]
 
 xmid = [
-    8,
-    5,
-    2
+    x[1],
+    x[3],
+    x[5]
 ]
 
 for i, (y, t) in enumerate(zip(x, trans)):
@@ -63,6 +63,7 @@ color = [dict(
     )[x] for x in sim]
 
 plt.xlim([0, 45])
+plt.ylim([x[-1]-0.5,x[0]+0.6])
 plt.xticks(np.arange(0, 45, 10))
 plt.yticks(xmid, ['Arbor', 'EDEN', 'NEURON'], rotation=90, va='center')
 plt.tick_params(axis='y', which='both', left=False)
