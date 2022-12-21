@@ -24,7 +24,6 @@
    (TeX-add-symbols
     '("circled" 1))
    (LaTeX-add-labels
-    "fig:bar"
     "fig:5a")
    (LaTeX-add-bibliographies
     "references")

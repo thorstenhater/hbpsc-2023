@@ -155,16 +155,15 @@
       Arbor's model for building simulations is highly flexible: cell types and
       their ion channel dynamics are given at runtime. Ion channels can be
       loaded from shared libraries at start-up. However, this flexibility comes
-      at the cost of missing performance optimisations.
-
-      Since \texttt{nmlcc} can inspect the full simulation, it has extensive
-      potential for optimisation, mainly when dealing with ion channel
-      descriptions. These are one of the two main cost centres in a simulation,
-      the other is solving the cable equation. We perform two central high-level
-      transformations: Specialisation and Combination. Both designed to expose
-      more optimisations to the later stages of building the shared libraries.
-      We exploit that NML2 provides assignments of the form
-      \verb!(region, channel, parameters)! where
+      at the cost of missing performance optimisations. Since \texttt{nmlcc} can
+      inspect the full simulation, it has extensive potential for optimisation,
+      mainly when dealing with ion channel descriptions. These are one of the
+      two main cost centres in a simulation, the other is solving the cable
+      equation. We perform two central high-level transformations:
+      Specialisation and Combination. Both designed to expose more optimisations
+      to the later stages of building the shared libraries. We exploit that NML2
+      provides assignments of the form \verb!(region, channel, parameters)!
+      where
       \begin{description}
         \item[\texttt{region}] sub-set of the morphology's segments
         \item[\texttt{channel}] the ion channel name
@@ -196,47 +195,49 @@
   \textcolor{arborange}{\rule{\textwidth}{0.5ex}}
   \vspace*{-1ex}
   \begin{columns}
-    \begin{column}{0.7\textwidth}
-
-  \begin{columns}
-    \begin{column}{0.4\textwidth}
+    \begin{column}{0.74\textwidth}
+  \begin{columns}[t]
+    \begin{column}[t]{0.45\textwidth}
       \textbf{Performance}
-      \begin{figure}[h]
-        \includegraphics[width=\textwidth]{./benchmark/barchart.pdf}
-          \caption{Performance comparison across simulators and setups on
-                   simulation of figure 5A from Hay \emph{et al.}.
-                   By default, timestepping with $\Delta t = 0.025ms$
-                   is used, but for NEURON in the CVODE case, we enabled
-                   single-cell optimised adaptive time-stepping.}
-        \label{fig:bar}
-      \end{figure}
-    \end{column}
-    \begin{column}{0.45\textwidth}
-      \emph{Setup} We compare performance using the Layer 5 pyramidal cell model
-      of Hay \emph{et al.} across NeuroML supporting simulators NEURON, EDEN and
-      Arbor. The original cell model is tuned for simulation with NEURON, yet
-      the provided NeuroML description lends itself for ready conversion to
-      EDEN, Arbor, and again NEURON (via jnml). We selected figure 5a among the
-      available simulation setups in the Hay \emph{et al.} repository, as this
-      example had the highest compute density (Fig.~\ref{fig:bar}). All
-      simulations are performed on the JUWELS cluster, on a single Intel Xeon
-      Platinum 8168 CPU running at 2.7 GHz.
+      \vspace*{1ex}
 
-      \emph{Results} Among fixed time stepping methods, Arbor is the clear
-      winner for both jnml converted model and our nmlcc compiler output.
-      NEURONs adaptive timestepping method (CVODE) leads to a significant
-      speedup in comparison to fixed timestepping in NEURON, but is still slower
-      than Arbor's fixed timestepping method. This is in part due to the
-      transient heavy simulation setup, for single spikes in long simulation
-      times CVODE would outperform Arbor by a small amount. We think that this
-      is a boundary case that should not be observed in realistic simulation
-      scenarios. We show that the merging of channel mechanisms brings another
-      10\% speedup over regular translation.
+      \includegraphics[width=\textwidth]{./benchmark/barchart_cropped.pdf}
+
+      Performance comparison across simulators and setups on simulation of
+      figure 5a from Hay \emph{et al.}. By default $\Delta t = 0.025ms$ is used,
+      except for the CVODE case, which leverages NEURON's adaptive time-stepping.
+    \end{column}
+    \begin{column}[t]{0.54\textwidth}
+      \textbf{Benchmark}
+
+      We compare performance using the Layer 5 pyramidal cell model of Hay
+      \emph{et al.} across NeuroML supporting simulators NEURON, EDEN and Arbor.
+      The original cell model is tuned for simulation with NEURON, yet the
+      provided NeuroML description lends itself for ready conversion to EDEN,
+      Arbor, and again NEURON (via jnml). We selected figure 4b among the
+      available simulation setups in the Hay \emph{et al.} repository, as this
+      example had the highest compute density (left). All simulations are
+      performed on the JUWELS cluster, on a single Intel Xeon Platinum 8168 CPU
+      running at 2.7 GHz.
+
+      \textbf{Results}
+
+      Among fixed time stepping methods, Arbor is the clear winner for both jnml
+      converted model and our nmlcc compiler output. NEURONs adaptive
+      timestepping method leads to a significant speedup in comparison to fixed
+      timestepping, but is still slower than Arbor's fixed
+      timestepping method. This is in part due to the transient heavy simulation
+      setup, for single spikes in long simulation times CVODE would outperform
+      Arbor by a small amount. We think that this is a boundary case that should
+      not be observed in realistic simulation scenarios; especially in network
+      simulations, as CVODE does not allow for incoming spikes. We show that the
+      merging of channel mechanisms yields another 10\% speedup over regular
+      translation.
 
       Importantly, the nmlcc method is fully automatic, yet still manages to
       outperform jnml Arbor conversion and Hay \emph{et al.} optimized model
       implementation. Arbor nmlcc faithfully reproduces expected critical firing
-      behaviour from Hay \emph{et al.} figure 5a (shown right).
+      behaviour from Hay \emph{et al.} figure 5a (right).
     \end{column}
   \end{columns}
   % Development and Future Work.
@@ -267,24 +268,21 @@
       language that offers features convenient for writing compiler-like
       software -- such as pattern matching, automated serialisation, and
       algebraic data types -- in addition to a rich packaging ecosystem, which
-      makes installation on enduser's device trivial.
-
-      The internal data model is automatically generated from the schemea files
-      and base libraries included with NML2. This two-phase approach allows us
-      to rapidly adapt to changes in NML2.
-
-      \texttt{nmlcc} is published on GitHub under the GPL-3 open-source license,
-      which is compatible with NML2. We use the platforms CI service to ensure
-      each update matches a series of known good outputs as well as conforms to
-      accepted coding standards.
+      makes installation on enduser's device trivial. The internal data model is
+      automatically generated from the schemea files and base libraries included
+      with NML2. This two-phase approach allows us to rapidly adapt to changes
+      in NML2. \texttt{nmlcc} is published on GitHub under the GPL-3 open-source
+      license, which is compatible with NML2. We use the platforms CI service to
+      ensure each update matches a series of known good outputs as well as
+      conforms to accepted coding standards.
     \end{column}
   \end{columns}
     \end{column}
 
-    \begin{column}{0.3\textwidth}
+    \begin{column}{0.25\textwidth}
       \begin{figure}[h]
         \centering
-        \includegraphics[width=\textwidth]{./benchmark/5a.pdf}
+        \includegraphics[width=\textwidth]{./benchmark/5a_cropped.pdf}
         \label{fig:5a}
       \end{figure}
     \end{column}
