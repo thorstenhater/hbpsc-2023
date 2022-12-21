@@ -10,7 +10,10 @@ main.pdf: $(SRC) references.bib
 	$(LTX) $(SRC)
 	$(LTX) $(SRC)
 
-.PHONY: clean
+readme: main.pdf
+	pdf2svg main.pdf main.svg
+
+.PHONY: clean readme
 clean:
 	-rm -f *.log *.snm *.out *.nav *.toc *.aux *.bbl *.bcf *.blg *.vrb
 	-rm -f main.pdf
