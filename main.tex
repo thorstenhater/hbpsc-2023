@@ -196,11 +196,13 @@
   \textcolor{arborange}{\rule{\textwidth}{0.5ex}}
   \vspace*{-1ex}
   \begin{columns}
-    \begin{column}{0.42\textwidth}
+    \begin{column}{0.7\textwidth}
+
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
       \textbf{Performance}
       \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.8\textwidth]{./benchmark/barchart.pdf}
+        \includegraphics[width=\textwidth]{./benchmark/barchart.pdf}
           \caption{Performance comparison across simulators and setups on
                    simulation of figure 5A from Hay \emph{et al.}.
                    By default, timestepping with $\Delta t = 0.025ms$
@@ -209,61 +211,37 @@
         \label{fig:bar}
       \end{figure}
     \end{column}
-    \begin{column}{0.42\textwidth}
-        \emph{Setup}
-        We compare performance using
-            the Layer 5 pyramidial cell model of Hay \emph{et al.}
-            across NeuroML supporting simulators NEURON, EDEN and Arbor.
-        The original cell model is tuned for simulation with NEURON,
-            yet the provided NeuroML description lends itself for
-            readily conversion to EDEN, Arbor, and again NEURON (via jnml).
-        For performance comparison,
-            we selected figure 4b among the available simulation setups
-            in the Hay \emph{et al.} repository,
-            because this example had the highest compute density
-            (Fig.~\ref{fig:bar}).
-        All simulations are performed on the JUWELS cluster,
-            on a single Intel Xeon Platinum 8168 CPU running at 2.7 GHz.
+    \begin{column}{0.45\textwidth}
+      \emph{Setup} We compare performance using the Layer 5 pyramidal cell model
+      of Hay \emph{et al.} across NeuroML supporting simulators NEURON, EDEN and
+      Arbor. The original cell model is tuned for simulation with NEURON, yet
+      the provided NeuroML description lends itself for ready conversion to
+      EDEN, Arbor, and again NEURON (via jnml). We selected figure 5a among the
+      available simulation setups in the Hay \emph{et al.} repository, as this
+      example had the highest compute density (Fig.~\ref{fig:bar}). All
+      simulations are performed on the JUWELS cluster, on a single Intel Xeon
+      Platinum 8168 CPU running at 2.7 GHz.
 
-        \emph{Results}
-        Among fixed time stepping methods (all except CVODE),
-            Arbor is a clear winner for both jnml converted model
-            and our nmlcc compiler output.
-        NEURONs adaptive timestepping method (CVODE)
-            leads to a significant speedup in comparison
-            to fixed timestepping in NEURON,
-            but is still slower than Arbor's 
-            fixed timestepping method.
-        This is in part due to the transient heavy simulation setup,
-            for single spikes in long simulation times CVODE
-            would outperform Arbor by a small amount.
-        We think that this is a boundary case that should not be observed
-            in realistic simulation scenarios.
+      \emph{Results} Among fixed time stepping methods, Arbor is the clear
+      winner for both jnml converted model and our nmlcc compiler output.
+      NEURONs adaptive timestepping method (CVODE) leads to a significant
+      speedup in comparison to fixed timestepping in NEURON, but is still slower
+      than Arbor's fixed timestepping method. This is in part due to the
+      transient heavy simulation setup, for single spikes in long simulation
+      times CVODE would outperform Arbor by a small amount. We think that this
+      is a boundary case that should not be observed in realistic simulation
+      scenarios. We show that the merging of channel mechanisms brings another
+      10\% speedup over regular translation.
 
-        % nmlcc is written in a way that optimises for SIMD performance,
-        %     and optimal CPU usage by writing nearly branchless code.
-        nmlcc allows for the merging of channel mechanisms in the same
-        model region to a single \emph{super-mechanism} with constants
-        folded in.
-        We show that this brings another 10\% speedup over
-        regular translation.
-
-        Importantly, the nmlcc method is a fully automatic method,
-        yet still manages to outperform jnml hand-edited Arbor conversion
-        and Hay \emph{et al.} optimized model implementation.
-        Arbor nmlcc faithfully reproduces expected critical firing behaviour from Hay \emph{et al.} figure 5a (shown right).
-    \end{column}
-    \begin{column}{0.15\textwidth}
-      \begin{figure}[h]
-        \centering
-        \includegraphics[width=\textwidth]{./benchmark/5a.pdf}
-        \label{fig:5a}
-      \end{figure}
+      Importantly, the nmlcc method is fully automatic, yet still manages to
+      outperform jnml Arbor conversion and Hay \emph{et al.} optimized model
+      implementation. Arbor nmlcc faithfully reproduces expected critical firing
+      behaviour from Hay \emph{et al.} figure 5a (shown right).
     \end{column}
   \end{columns}
   % Development and Future Work.
   \vspace*{1ex}
-  \textcolor{arbred}{\rule{\textwidth}{0.5ex}}
+  \textcolor{arbred}{\rule{\textwidth}{0.59ex}}
   \vspace*{-1ex}
   \begin{columns}[t]
     \begin{column}[t]{0.49\textwidth}
@@ -272,9 +250,6 @@
       While preparing this presentation we identified a series of possible
       enhancements to \texttt{nmlcc} in addition to our preexisting roadmap.
 
-      \emph{Simplifying the user experience} add commands to run the prepared
-      simulation and possibly to set up Arbor, if needed. This would reduce the
-      effort needed to run NML2 models to a bare minimum.\\[1.5ex]
       \emph{Using C++ instead of Python} to improve runtime performance for the
       generated simulation -- especially as we store connectivity data inside --
       we consider generating C++ code instead of Python.\\[1.5ex]
@@ -304,6 +279,17 @@
       accepted coding standards.
     \end{column}
   \end{columns}
+    \end{column}
+
+    \begin{column}{0.3\textwidth}
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth]{./benchmark/5a.pdf}
+        \label{fig:5a}
+      \end{figure}
+    \end{column}
+  \end{columns}
+
   % References
   \vspace*{1ex}
   \textcolor{arbgrey}{\rule{\textwidth}{0.5ex}}
