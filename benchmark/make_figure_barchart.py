@@ -11,7 +11,7 @@ table = '''
 | Arbor     | nmlcc (optimised)  | 0.025            | 1.36                     | fastest         |
 | Arbor     | nmlcc              | 0.025            | 1.55                     | 14.220% slower  |
 | Arbor     | jnml               | 0.025            | 3.00                     | 121.379% slower |
-| EDEN      | 0.2.0              | 0.025            | 4.50                     | 232.152% slower |
+| EDEN      | nml                | 0.025            | 4.50                     | 232.152% slower |
 | NEURON    | Hay et al. (cvode) | Adaptive (cvode) | 2.22                     |                 |
 | NEURON    | Hay et al.         | 0.025            | 9.75                     | 619.610% slower |
 | NEURON    | jnml               | 0.025            | 11.83                    | 773.229% slower |
