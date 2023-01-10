@@ -1,0 +1,85 @@
+{"method": "neuron", "version": "neuron-jnml", "walltime_s": 35.50212740898132, "dt": 0.025, "simtime_ms": 3000.0, "figure": "4b"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.6976087288931012, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-pynml_4a_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8136119470000267, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-super_4a_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 4.066514579812065, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-super_4b_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8169944761320949, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-super_5a_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9344950150698423, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc_4a_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 4.643733000848442, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc_4b_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.93832295993343, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc_5a_0.025_0.csv"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.5568228890188038, "dt": "cvode", "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.662729518953711, "dt": "cvode", "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.8699313511606306, "dt": "cvode", "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.0102069929707795, "dt": 0.025, "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 29.25656754989177, "dt": 0.025, "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 9.839382780017331, "dt": 0.025, "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron-jnml", "walltime_s": 35.613919734954834, "dt": 0.025, "simtime_ms": 3000.0, "figure": "4b"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.6976616838946939, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-pynml_4a_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8136224490590394, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-super_4a_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 4.066863930085674, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-super_4b_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8161736170295626, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-super_5a_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9304252280853689, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc_4a_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 4.653301725164056, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc_4b_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9395214591640979, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc_5a_0.025_1.csv"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.5435160980559886, "dt": "cvode", "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.671104515902698, "dt": "cvode", "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.865012772846967, "dt": "cvode", "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 5.951243150047958, "dt": 0.025, "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 29.26031287200749, "dt": 0.025, "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 9.841851766919717, "dt": 0.025, "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron-jnml", "walltime_s": 35.560298204422, "dt": 0.025, "simtime_ms": 3000.0, "figure": "4b"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.6997759090736508, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-pynml_4a_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8118944498710334, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-super_4a_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 4.065613192040473, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-super_4b_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8131421080324799, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-super_5a_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9295966841746122, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc_4a_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 4.659108496038243, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc_4b_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9353382110130042, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc_5a_0.025_2.csv"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.5454657119698822, "dt": "cvode", "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.657089106040075, "dt": "cvode", "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.8669776159804314, "dt": "cvode", "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 5.96689719078131, "dt": 0.025, "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 29.43108816095628, "dt": 0.025, "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 9.82627090997994, "dt": 0.025, "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron-jnml", "walltime_s": 35.61422657966614, "dt": 0.025, "simtime_ms": 3000.0, "figure": "4b"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.6948279230855405, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-pynml_4a_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8137224889360368, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-super_4a_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 4.070768328849226, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-super_4b_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8156791448127478, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-super_5a_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9311586748808622, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc_4a_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 4.6445710870902985, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc_4b_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9375872379168868, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc_5a_0.025_3.csv"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.5451737521216273, "dt": "cvode", "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.660219409968704, "dt": "cvode", "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.868526526959613, "dt": "cvode", "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 5.942884970922023, "dt": 0.025, "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 29.270525988889858, "dt": 0.025, "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 9.83979927515611, "dt": 0.025, "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron-jnml", "walltime_s": 35.555790424346924, "dt": 0.025, "simtime_ms": 3000.0, "figure": "4b"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.69527928205207, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-pynml_4a_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8138385938946158, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc-super_4a_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 4.0729179319459945, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-super_4b_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc-super", "walltime_s": 0.8138473317958415, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-super_5a_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.928595663048327, "dt": 0.025, "simtime_ms": 600, "figure": "4a", "results": "../results/results_nmlcc_nmlcc_4a_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 4.671104662120342, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc_4b_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc", "walltime_s": 0.9428121710661799, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc_5a_0.025_4.csv"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.5550739062018692, "dt": "cvode", "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 6.684219921939075, "dt": "cvode", "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 0.8643414101097733, "dt": "cvode", "simtime_ms": 1000, "figure": "5a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 5.9732662530150265, "dt": 0.025, "simtime_ms": 600, "figure": "4a"}
+{"method": "neuron", "version": "neuron", "walltime_s": 29.38731550402008, "dt": 0.025, "simtime_ms": 3000, "figure": "4b"}
+{"method": "neuron", "version": "neuron", "walltime_s": 9.828757165931165, "dt": 0.025, "simtime_ms": 1000, "figure": "5a"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 11.016883824951947, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-pynml_4b_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.9376667540054768, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-pynml_5a_0.025_0.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 10.2767261241097, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-pynml_4b_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.9564363691024482, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-pynml_5a_0.025_1.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 9.128360216040164, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-pynml_4b_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.9231316309887916, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-pynml_5a_0.025_2.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 9.000402253121138, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-pynml_4b_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.9151447680778801, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-pynml_5a_0.025_3.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 9.593897542916238, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../results/results_nmlcc_nmlcc-pynml_4b_0.025_4.csv"}
+{"method": "nmlcc", "version": "nmlcc-pynml", "walltime_s": 1.878940304974094, "dt": 0.025, "simtime_ms": 600, "figure": "5a", "results": "../results/results_nmlcc_nmlcc-pynml_5a_0.025_4.csv"}
+{"method": "eden", "version": "eden", "walltime_s": 13.633, "setup_s": 3.781, "config_s": 0.382, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../../results/results_eden_4b_0.025_5.csv"}
+{"method": "eden", "version": "eden", "walltime_s": 13.504, "setup_s": 1.045, "config_s": 0.015, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../../results/results_eden_4b_0.025_6.csv"}
+{"method": "eden", "version": "eden", "walltime_s": 13.604, "setup_s": 1.057, "config_s": 0.013, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../../results/results_eden_4b_0.025_7.csv"}
+{"method": "eden", "version": "eden", "walltime_s": 13.513, "setup_s": 1.055, "config_s": 0.012, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../../results/results_eden_4b_0.025_8.csv"}
+{"method": "eden", "version": "eden", "walltime_s": 13.562, "setup_s": 1.023, "config_s": 0.012, "dt": 0.025, "simtime_ms": 3000, "figure": "4b", "results": "../../results/results_eden_4b_0.025_9.csv"}
