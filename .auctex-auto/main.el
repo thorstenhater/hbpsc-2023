@@ -2,7 +2,7 @@
  "main"
  (lambda ()
    (TeX-add-to-alist 'LaTeX-provided-package-options
-                     '(("biblatex" "style=numeric" "maxnames=2") ("beamerposter" "orientation=portrait" "size=a1" "scale=1.0")))
+                     '(("biblatex" "style=numeric" "maxnames=2" "defernumbers=true") ("beamerposter" "orientation=portrait" "size=a1" "scale=1.0")))
    (add-to-list 'LaTeX-verbatim-environments-local "minted")
    (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
