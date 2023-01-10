@@ -155,16 +155,15 @@
       Arbor's model for building simulations is highly flexible: cell types and
       their ion channel dynamics are given at runtime. Ion channels can be
       loaded from shared libraries at start-up. However, this flexibility comes
-      at the cost of missing performance optimisations.
-
-      Since \texttt{nmlcc} can inspect the full simulation, it has extensive
-      potential for optimisation, mainly when dealing with ion channel
-      descriptions. These are one of the two main cost centres in a simulation,
-      the other is solving the cable equation. We perform two central high-level
-      transformations: Specialisation and Combination. Both designed to expose
-      more optimisations to the later stages of building the shared libraries.
-      We exploit that NML2 provides assignments of the form
-      \verb!(region, channel, parameters)! where
+      at the cost of missing performance optimisations. Since \texttt{nmlcc} can
+      inspect the full simulation, it has extensive potential for optimisation,
+      mainly when dealing with ion channel descriptions. These are one of the
+      two main cost centres in a simulation, the other is solving the cable
+      equation. We perform two central high-level transformations:
+      Specialisation and Combination. Both designed to expose more optimisations
+      to the later stages of building the shared libraries. We exploit that NML2
+      provides assignments of the form \verb!(region, channel, parameters)!
+      where
       \begin{description}
         \item[\texttt{region}] sub-set of the morphology's segments
         \item[\texttt{channel}] the ion channel name
@@ -196,121 +195,106 @@
   \textcolor{arborange}{\rule{\textwidth}{0.5ex}}
   \vspace*{-1ex}
   \begin{columns}
-    \begin{column}{0.42\textwidth}
-      \textbf{Performance}
-      \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.8\textwidth]{./benchmark/barchart_cropped.pdf}
-          \caption{Performance comparison across simulators and setups on
-                   simulation of figure 5A from Hay \emph{et al.}.
-                   By default, timestepping with $\Delta t = 0.025ms$
-                   is used, but for NEURON in the CVODE case, we enabled
-                   single-cell optimised adaptive time-stepping.}
-        \label{fig:bar}
-      \end{figure}
+    \begin{column}{0.73\textwidth}
+      \begin{columns}[t]
+        \begin{column}[t]{0.45\textwidth}
+          \textbf{Performance}
+          \vspace*{1ex}
+
+          \includegraphics[width=\textwidth]{./benchmark/barchart_cropped.pdf}
+
+          Performance comparison across simulators and setups on simulation of
+          figure 5a from Hay \emph{et al.}. By default $\Delta t = 0.025ms$ is used,
+          except for the CVODE case, which leverages NEURON's adaptive time-stepping.
+        \end{column}
+        \begin{column}[t]{0.54\textwidth}
+          \textbf{Benchmark}
+
+          We compare performance using the Layer 5 pyramidal cell model of Hay
+          \emph{et al.} across NeuroML supporting simulators NEURON, EDEN and Arbor.
+          The original cell model is tuned for simulation with NEURON, yet the
+          provided NeuroML description lends itself for ready conversion to EDEN,
+          Arbor, and again NEURON (via jnml). We selected figure 4b among the
+          available simulation setups in the Hay \emph{et al.} repository, as this
+          example had the highest compute density (left). All simulations are
+          performed on the JUWELS cluster, on a single Intel Xeon Platinum 8168 CPU
+          running at 2.7 GHz.
+
+          \textbf{Results}
+
+          Among fixed time stepping methods, Arbor is the clear winner for both jnml
+          converted model and our nmlcc compiler output. NEURONs adaptive
+          timestepping method leads to a significant speedup in comparison to fixed
+          timestepping, but is still slower than Arbor's fixed timestepping method.
+          This is in part due to the transient heavy simulation setup, for single
+          spikes in long simulation times CVODE would outperform Arbor by a small
+          amount. We think that this is a boundary case that should not be observed
+          in realistic simulation scenarios; especially in network simulations, as
+          CVODE does not allow for incoming spikes. We show that the merging of
+          channel mechanisms yields another 10\% speedup over regular translation.
+          EDEN allows for direct consumption of NML2 models, and while it is
+          significantly faster than NEURON, it does not achieve performance
+          comparable to Arbor.
+
+          Importantly, the nmlcc method is fully automatic, yet still manages to
+          outperform jnml Arbor conversion and the Hay \emph{et al.} optimized model
+          implementation. Arbor nmlcc faithfully reproduces expected critical firing
+          behaviour from Hay \emph{et al.} figure 5a (right).
+        \end{column}
+      \end{columns}
+      % Development and Future Work.
+      \vspace*{1ex}
+      \textcolor{arbred}{\rule{\textwidth}{0.59ex}}
+      \vspace*{-1ex}
+      \begin{columns}[t]
+        \begin{column}[t]{0.49\textwidth}
+          \textbf{Future Work}
+
+          While preparing this presentation we identified a series of possible
+          enhancements to \texttt{nmlcc} in addition to our preexisting roadmap.
+
+          \emph{Using C++ instead of Python} to improve runtime performance for the
+          generated simulation -- especially as we store connectivity data inside --
+          we consider generating C++ code instead of Python.\\[1.5ex]
+          \emph{Fine grained region} currently we rely on identical region tags for
+          identifying targets for combination and specialisation. To maximise the
+          gains from these optimisations, we should synthesise regions from the
+          existing tagged subsets such that each branch is covered by exactly one
+          tag. Thus a single, completely specialised mechanism will be generated per
+          tag.
+        \end{column}
+        \begin{column}[t]{0.49\textwidth}
+          \textbf{Development Methodolgy}
+
+          \texttt{nmlcc} is written in Rust, a modern high-performance, memory safe
+          language that offers features convenient for writing compiler-like
+          software -- such as pattern matching, automated serialisation, and
+          algebraic data types -- in addition to a rich packaging ecosystem, which
+          makes installation on enduser's device trivial. The internal data model is
+          automatically generated from the schemea files and base libraries included
+          with NML2. This two-phase approach allows us to rapidly adapt to changes
+          in NML2. \texttt{nmlcc} is published on GitHub under the GPL-3 open-source
+          license, which is compatible with NML2. We use the platforms CI service to
+          ensure each update matches a series of known good outputs as well as
+          conforms to accepted coding standards.
+        \end{column}
+      \end{columns}
     \end{column}
-    \begin{column}{0.42\textwidth}
-        \emph{Setup}
-        We compare performance using
-            the Layer 5 pyramidial cell model of Hay \emph{et al.}
-            across NeuroML supporting simulators NEURON, EDEN and Arbor.
-        The original cell model is tuned for simulation with NEURON,
-            yet the provided NeuroML description lends itself for
-            readily conversion to EDEN, Arbor, and again NEURON (via jnml).
-        For performance comparison,
-            we selected figure 4b among the available simulation setups
-            in the Hay \emph{et al.} repository,
-            because this example had the highest compute density
-            (Fig.~\ref{fig:bar}).
-        All simulations are performed on the JUWELS cluster,
-            on a single Intel Xeon Platinum 8168 CPU running at 2.7 GHz.
 
-        \emph{Results}
-        Among fixed time stepping methods (all except CVODE),
-            Arbor is a clear winner for both jnml converted model
-            and our nmlcc compiler output.
-        NEURONs adaptive timestepping method (CVODE)
-            leads to a significant speedup in comparison
-            to fixed timestepping in NEURON,
-            but is still slower than Arbor's 
-            fixed timestepping method.
-        This is in part due to the transient heavy simulation setup,
-            for single spikes in long simulation times CVODE
-            would outperform Arbor by a small amount.
-        We think that this is a boundary case that should not be observed
-            in realistic simulation scenarios.
-
-        % nmlcc is written in a way that optimises for SIMD performance,
-        %     and optimal CPU usage by writing nearly branchless code.
-        nmlcc allows for the merging of channel mechanisms in the same
-        model region to a single \emph{super-mechanism} with constants
-        folded in.
-        We show that this brings another 10\% speedup over
-        regular translation.
-
-        Importantly, the nmlcc method is a fully automatic method,
-        yet still manages to outperform jnml hand-edited Arbor conversion
-        and Hay \emph{et al.} optimized model implementation.
-        Arbor nmlcc faithfully reproduces expected critical firing behaviour from Hay \emph{et al.} figure 5a (shown right).
-    \end{column}
-    \begin{column}{0.15\textwidth}
+    \begin{column}{0.21\textwidth}
       \begin{figure}[h]
-        \centering
         \includegraphics[width=\textwidth]{./benchmark/5a_cropped.pdf}
-        \label{fig:5a}
       \end{figure}
     \end{column}
   \end{columns}
-  % Development and Future Work.
-  \vspace*{1ex}
-  \textcolor{arbred}{\rule{\textwidth}{0.5ex}}
-  \vspace*{-1ex}
-  \begin{columns}[t]
-    \begin{column}[t]{0.49\textwidth}
-      \textbf{Future Work}
 
-      While preparing this presentation we identified a series of possible
-      enhancements to \texttt{nmlcc} in addition to our preexisting roadmap.
-
-      \emph{Simplifying the user experience} add commands to run the prepared
-      simulation and possibly to set up Arbor, if needed. This would reduce the
-      effort needed to run NML2 models to a bare minimum.\\[1.5ex]
-      \emph{Using C++ instead of Python} to improve runtime performance for the
-      generated simulation -- especially as we store connectivity data inside --
-      we consider generating C++ code instead of Python.\\[1.5ex]
-      \emph{Fine grained region} currently we rely on identical region tags for
-      identifying targets for combination and specialisation. To maximise the
-      gains from these optimisations, we should synthesise regions from the
-      existing tagged subsets such that each branch is covered by exactly one
-      tag. Thus a single, completely specialised mechanism will be generated per
-      tag.
-    \end{column}
-    \begin{column}[t]{0.49\textwidth}
-      \textbf{Development Methodolgy}
-
-      \texttt{nmlcc} is written in Rust, a modern high-performance, memory safe
-      language that offers features convenient for writing compiler-like
-      software -- such as pattern matching, automated serialisation, and
-      algebraic data types -- in addition to a rich packaging ecosystem, which
-      makes installation on enduser's device trivial.
-
-      The internal data model is automatically generated from the schemea files
-      and base libraries included with NML2. This two-phase approach allows us
-      to rapidly adapt to changes in NML2.
-
-      \texttt{nmlcc} is published on GitHub under the GPL-3 open-source license,
-      which is compatible with NML2. We use the platforms CI service to ensure
-      each update matches a series of known good outputs as well as conforms to
-      accepted coding standards.
-    \end{column}
-  \end{columns}
   % References
   \vspace*{1ex}
   \textcolor{arbgrey}{\rule{\textwidth}{0.5ex}}
   \vspace*{-1ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
-      \textbf{References}
+      \printbibliography
     \end{column}
     \begin{column}{0.49\textwidth}
       \textbf{Acknowledgements}
