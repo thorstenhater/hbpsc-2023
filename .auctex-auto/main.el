@@ -22,7 +22,8 @@
     "tikz"
     "beamerposter")
    (TeX-add-symbols
-    '("circled" 1))
+    '("circled" 1)
+    "nmlcc")
    (LaTeX-add-bibliographies
     "references")
    (LaTeX-add-xcolor-definecolors

@@ -30,6 +30,9 @@
 \setbeamertemplate{partner2}{\includegraphics{img/HBP_logo}}
 
 \begin{document}
+
+\newcommand{\nmlcc}{\texttt{nmlcc}}
+
 \begin{frame}[t, fragile]
   \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
   \framesubtitle{Generating High Performance Simulations from a Portable Data Format using Arbor\\
@@ -44,23 +47,27 @@
       implementation lacks in performance and scalability to larger simulations
       \cite{nml2}. Our goal is to enable Arbor, a performance-portable library
       for simulating morphologically detailed neurons to consume NeuronML2
-      models. We present \texttt{nmlcc}, a tool to generate optimised, full
-      scale simulations from a description in NeuroML2 \cite{nmlcc}. It produces
-      bespoke dynamics tailored to the input, resulting in performance metrics
-      comparable to hand-optimized code. Through Arbor, the generated simulation
-      package is able to utilize modern hardware, including large-scale GPU
-      clusters, scaling to millions of cells \cite{arb}. As a case study, we
-      show how a single cell simulation based on \cite{Hay} was ported to Arbor
-      using \texttt{nmlcc}. Finally, we analyse the runtime performance of the
-      produced model.
+      models. We present \nmlcc, a tool to generate optimised, full scale
+      simulations from a description in NeuroML2. It produces bespoke dynamics
+      tailored to the input, resulting in performance metrics comparable to
+      hand-optimized code. Through Arbor, the generated simulation package is
+      able to utilize modern hardware, including large-scale GPU clusters,
+      scaling to millions of cells \cite{arb}. As a case study, we show how a
+      single cell simulation based on \cite{Hay} was ported to Arbor using
+      \nmlcc. Finally, we analyse the runtime performance of the produced model.
+
+      This poster and all associated data and scripts can be found at the URL on
+      the right.
     \end{column}
-    \begin{column}{0.2\textwidth}
+    \begin{column}{0.22\textwidth}
       \vspace*{-1ex}
-      \begin{block}{Where to find us}
+      \begin{block}{Where to find\dots}
         \begin{description}
           \item[Arbor] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
           \item[nmlcc] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/nmlcc}
+          \item[This] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/hbpsc-2022}
           \item[Contact] \href{mailto:t.hater@fz-juelich.de}{t.hater@fz-juelich.de}
+          \item[License] GPL-3
         \end{description}
       \end{block}
     \end{column}
@@ -127,7 +134,7 @@
     \begin{column}{0.54\textwidth}
       \textbf{Dataflow}
 
-      \texttt{nmlcc} consumes NML2 descriptions at the level of individual ion
+      \nmlcc consumes NML2 descriptions at the level of individual ion
       channels, cells (comprising a morphology, ion channels, and parameter
       assignments), and full networks, which include cells, their connectivity,
       and network parameters. This is achieved by translating components into
@@ -155,7 +162,7 @@
       Arbor's model for building simulations is highly flexible: cell types and
       their ion channel dynamics are given at runtime. Ion channels can be
       loaded from shared libraries at start-up. However, this flexibility comes
-      at the cost of missing performance optimisations. Since \texttt{nmlcc} can
+      at the cost of missing performance optimisations. Since \nmlcc can
       inspect the full simulation, it has extensive potential for optimisation,
       mainly when dealing with ion channel descriptions. These are one of the
       two main cost centres in a simulation, the other is solving the cable
@@ -207,23 +214,23 @@
           figure 5a from Hay \emph{et al.}. By default $\Delta t = 0.025ms$ is used,
           except for the CVODE case, which leverages NEURON's adaptive time-stepping.
         \end{column}
-        \begin{column}[t]{0.54\textwidth}
+        \begin{column}[t]{0.53\textwidth}
           \textbf{Benchmark}
 
           We compare performance using the Layer 5 pyramidal cell model of Hay
           \emph{et al.} across NeuroML supporting simulators NEURON, EDEN and Arbor.
           The original cell model is tuned for simulation with NEURON, yet the
           provided NeuroML description lends itself for ready conversion to EDEN,
-          Arbor, and again NEURON (via jnml). We selected figure 4b among the
-          available simulation setups in the Hay \emph{et al.} repository, as this
-          example had the highest compute density (left). All simulations are
+          Arbor, and again NEURON via jnml. We selected figure 4b among the
+          available simulation setups from the paper repository (left)~\cite{HayNML}. This
+          example has the highest compute density. All simulations are
           performed on the JUWELS cluster, on a single Intel Xeon Platinum 8168 CPU
           running at 2.7 GHz.
 
           \textbf{Results}
 
           Among fixed time stepping methods, Arbor is the clear winner for both jnml
-          converted model and our nmlcc compiler output. NEURONs adaptive
+          converted model and our \nmlcc compiler output. NEURONs adaptive
           timestepping method leads to a significant speedup in comparison to fixed
           timestepping, but is still slower than Arbor's fixed timestepping method.
           This is in part due to the transient heavy simulation setup, for single
@@ -236,10 +243,10 @@
           significantly faster than NEURON, it does not achieve performance
           comparable to Arbor.
 
-          Importantly, the nmlcc method is fully automatic, yet still manages to
-          outperform jnml Arbor conversion and the Hay \emph{et al.} optimized model
-          implementation. Arbor nmlcc faithfully reproduces expected critical firing
-          behaviour from Hay \emph{et al.} figure 5a (right).
+          Importantly, the \nmlcc method is fully automatic, yet still manages to
+          outperform \texttt{jnml} Arbor conversion and the original optimized model
+          implementation. Arbor \nmlcc faithfully reproduces expected critical firing
+          behaviour of figure 5a (right).
         \end{column}
       \end{columns}
       % Development and Future Work.
@@ -251,12 +258,12 @@
           \textbf{Future Work}
 
           While preparing this presentation we identified a series of possible
-          enhancements to \texttt{nmlcc} in addition to our preexisting roadmap.
+          enhancements to \nmlcc in addition to our preexisting roadmap.
 
           \emph{Using C++ instead of Python} to improve runtime performance for the
           generated simulation -- especially as we store connectivity data inside --
           we consider generating C++ code instead of Python.\\[1.5ex]
-          \emph{Fine grained region} currently we rely on identical region tags for
+          \emph{Fine-grained regions} currently we rely on identical region tags for
           identifying targets for combination and specialisation. To maximise the
           gains from these optimisations, we should synthesise regions from the
           existing tagged subsets such that each branch is covered by exactly one
@@ -266,14 +273,14 @@
         \begin{column}[t]{0.49\textwidth}
           \textbf{Development Methodolgy}
 
-          \texttt{nmlcc} is written in Rust, a modern high-performance, memory safe
+          \nmlcc is written in Rust, a modern high-performance, memory safe
           language that offers features convenient for writing compiler-like
           software -- such as pattern matching, automated serialisation, and
           algebraic data types -- in addition to a rich packaging ecosystem, which
           makes installation on enduser's device trivial. The internal data model is
           automatically generated from the schemea files and base libraries included
           with NML2. This two-phase approach allows us to rapidly adapt to changes
-          in NML2. \texttt{nmlcc} is published on GitHub under the GPL-3 open-source
+          in NML2. \nmlcc is published on GitHub under the GPL-3 open-source
           license, which is compatible with NML2. We use the platforms CI service to
           ensure each update matches a series of known good outputs as well as
           conforms to accepted coding standards.
@@ -281,7 +288,7 @@
       \end{columns}
     \end{column}
 
-    \begin{column}{0.21\textwidth}
+    \begin{column}{0.24\textwidth}
       \begin{figure}[h]
         \includegraphics[width=\textwidth]{./benchmark/5a_cropped.pdf}
       \end{figure}
@@ -294,6 +301,8 @@
   \vspace*{-1ex}
   \begin{columns}
     \begin{column}{0.49\textwidth}
+      \textbf{References}
+
       \printbibliography[type=article]
     \end{column}
     \begin{column}{0.49\textwidth}
