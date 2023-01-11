@@ -19,11 +19,14 @@
     "beamer10"
     "biblatex"
     "minted"
+    "relsize"
+    "xspace"
     "tikz"
     "beamerposter")
    (TeX-add-symbols
     '("circled" 1)
-    "nmlcc")
+    "nmlcc"
+    "cpp")
    (LaTeX-add-bibliographies
     "references")
    (LaTeX-add-xcolor-definecolors

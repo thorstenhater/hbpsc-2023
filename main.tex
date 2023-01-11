@@ -3,7 +3,7 @@
 \usepackage[style=numeric,maxnames=2, defernumbers=true]{biblatex}
 \usepackage{minted}
 \usemintedstyle{colorful}
-
+\usepackage{relsize, xspace}
 \usepackage{tikz}
 
 \definecolor{lightgray}{gray}{0.9}
@@ -32,6 +32,8 @@
 \begin{document}
 
 \newcommand{\nmlcc}{\texttt{nmlcc}}
+% C++ symbol; picked up from the ISO standard
+\newcommand\cpp{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
 
 \begin{frame}[t, fragile]
   \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
@@ -40,21 +42,22 @@
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.76\textwidth}
       Computational neuroscience is experiencing a steady growth in available
-      simulation tools applicable to morphologically detailed cell descriptions
-      \cite{eden, neurogpu, carl, brian, arb, nrn}. However, the development of
-      models that are actually portable between simulators lags behind. NeuroML2
-      is one of the few comprehensive approaches in this area, but its reference
-      implementation lacks in performance and scalability to larger simulations
-      \cite{nml2}. Our goal is to enable Arbor, a performance-portable library
-      for simulating morphologically detailed neurons to consume NeuronML2
-      models. We present \nmlcc, a tool to generate optimised, full scale
-      simulations from a description in NeuroML2. It produces bespoke dynamics
-      tailored to the input, resulting in performance metrics comparable to
-      hand-optimized code. Through Arbor, the generated simulation package is
-      able to utilize modern hardware, including large-scale GPU clusters,
-      scaling to millions of cells \cite{arb}. As a case study, we show how a
-      single cell simulation based on \cite{Hay} was ported to Arbor using
-      \nmlcc. Finally, we analyse the runtime performance of the produced model.
+      simulation tools applicable to morphologically detailed cell
+      descriptions~\cite{eden, neurogpu, carl, brian, arb, nrn}. However, the
+      development of models that are actually portable between simulators lags
+      behind. NeuroML2 is one of the few comprehensive approaches in this area,
+      but its reference implementation lacks in performance and scalability to
+      larger simulations~\cite{nml2}. Our goal is to enable Arbor, a
+      performance-portable library for simulating morphologically detailed
+      neurons to consume NeuronML2 models. We present \nmlcc, a tool to generate
+      optimised, full scale simulations from a description in NeuroML2. It
+      produces bespoke dynamics tailored to the input, resulting in performance
+      metrics comparable to hand-optimized code. Through Arbor, the generated
+      simulation package is able to utilize modern hardware, including
+      large-scale GPU clusters, scaling to millions of cells~\cite{arb}. As a
+      case study, we show how a single cell simulation based on~\cite{Hay} was
+      ported to Arbor using \nmlcc. Finally, we analyse the runtime performance
+      of the produced model.
 
       This poster and all associated data and scripts can be found at the URL on
       the right.
@@ -66,7 +69,6 @@
           \item[Arbor] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
           \item[nmlcc] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/nmlcc}
           \item[This] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/hbpsc-2022}
-          \item[Contact] \href{mailto:t.hater@fz-juelich.de}{t.hater@fz-juelich.de}
           \item[License] GPL-3
         \end{description}
       \end{block}
@@ -134,14 +136,14 @@
     \begin{column}{0.54\textwidth}
       \textbf{Dataflow}
 
-      \nmlcc consumes NML2 descriptions at the level of individual ion
+      \nmlcc{} consumes NML2 descriptions at the level of individual ion
       channels, cells (comprising a morphology, ion channels, and parameter
       assignments), and full networks, which include cells, their connectivity,
       and network parameters. This is achieved by translating components into
       Arbor's native format and connecting them in a Python script that provides
       a runnable simulation.
       \begin{description}
-        \item[Ion channel] Transformed to NMODL, translated to C++, and compiled to a
+        \item[Ion channel] Transformed to NMODL, translated to \cpp{}, and compiled to a
               shared library.
         \item[Morphology] Extracted to standalone NML2 morphology files, which Arbor can
               load natively.
@@ -162,7 +164,7 @@
       Arbor's model for building simulations is highly flexible: cell types and
       their ion channel dynamics are given at runtime. Ion channels can be
       loaded from shared libraries at start-up. However, this flexibility comes
-      at the cost of missing performance optimisations. Since \nmlcc can
+      at the cost of missing performance optimisations. Since \nmlcc{} can
       inspect the full simulation, it has extensive potential for optimisation,
       mainly when dealing with ion channel descriptions. These are one of the
       two main cost centres in a simulation, the other is solving the cable
@@ -229,23 +231,24 @@
 
           \textbf{Results}
 
-          Among fixed time stepping methods, Arbor is the clear winner for both jnml
-          converted model and our \nmlcc compiler output. NEURONs adaptive
-          timestepping method leads to a significant speedup in comparison to fixed
-          timestepping, but is still slower than Arbor's fixed timestepping method.
-          This is in part due to the transient heavy simulation setup, for single
-          spikes in long simulation times CVODE would outperform Arbor by a small
-          amount. We think that this is a boundary case that should not be observed
-          in realistic simulation scenarios; especially in network simulations, as
-          CVODE does not allow for incoming spikes. We show that the merging of
-          channel mechanisms yields another 10\% speedup over regular translation.
-          EDEN allows for direct consumption of NML2 models, and while it is
+          Among fixed time stepping methods, Arbor is the clear winner for both
+          \texttt{jnml} converted model and our \nmlcc{} compiler output.
+          NEURONs adaptive timestepping method leads to a significant speedup in
+          comparison to fixed timestepping, but is still slower than Arbor's
+          fixed timestepping method. This is in part due to the transient heavy
+          simulation setup, for single spikes in long simulation times CVODE
+          would outperform Arbor by a small amount. We think that this is a
+          boundary case that should not be observed in realistic simulation
+          scenarios; especially in network simulations, as CVODE's advantage is
+          negated by spike activity. We show that the merging of channel
+          mechanisms yields another 10\% speedup over regular translation. EDEN
+          allows for direct consumption of NML2 models, and while it is
           significantly faster than NEURON, it does not achieve performance
           comparable to Arbor.
 
-          Importantly, the \nmlcc method is fully automatic, yet still manages to
+          Importantly, the \nmlcc{} method is fully automatic, yet still manages to
           outperform \texttt{jnml} Arbor conversion and the original optimized model
-          implementation. Arbor \nmlcc faithfully reproduces expected critical firing
+          implementation. Arbor \nmlcc{} faithfully reproduces expected critical firing
           behaviour of figure 5a (right).
         \end{column}
       \end{columns}
@@ -258,11 +261,11 @@
           \textbf{Future Work}
 
           While preparing this presentation we identified a series of possible
-          enhancements to \nmlcc in addition to our preexisting roadmap.
+          enhancements to \nmlcc{} in addition to our preexisting roadmap.
 
-          \emph{Using C++ instead of Python} to improve runtime performance for the
+          \emph{Using \c++{} instead of Python} to improve runtime performance for the
           generated simulation -- especially as we store connectivity data inside --
-          we consider generating C++ code instead of Python.\\[1.5ex]
+          we consider generating \cpp{} code instead of Python.\\[1.5ex]
           \emph{Fine-grained regions} currently we rely on identical region tags for
           identifying targets for combination and specialisation. To maximise the
           gains from these optimisations, we should synthesise regions from the
@@ -273,14 +276,14 @@
         \begin{column}[t]{0.49\textwidth}
           \textbf{Development Methodolgy}
 
-          \nmlcc is written in Rust, a modern high-performance, memory safe
+          \nmlcc{} is written in Rust, a modern high-performance, memory safe
           language that offers features convenient for writing compiler-like
           software -- such as pattern matching, automated serialisation, and
           algebraic data types -- in addition to a rich packaging ecosystem, which
           makes installation on enduser's device trivial. The internal data model is
           automatically generated from the schemea files and base libraries included
           with NML2. This two-phase approach allows us to rapidly adapt to changes
-          in NML2. \nmlcc is published on GitHub under the GPL-3 open-source
+          in NML2. \nmlcc{} is published on GitHub under the GPL-3 open-source
           license, which is compatible with NML2. We use the platforms CI service to
           ensure each update matches a series of known good outputs as well as
           conforms to accepted coding standards.
