@@ -34,6 +34,7 @@
 \newcommand{\nmlcc}{\texttt{nmlcc}}
 % C++ symbol; picked up from the ISO standard
 \newcommand\cpp{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
+\newcommand\cppemph{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textit{++}}}}
 
 \begin{frame}[t, fragile]
   \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
@@ -68,7 +69,7 @@
         \begin{description}
           \item[Arbor] \href{https://arbor-sim.github.io}{arbor-sim.github.io}
           \item[nmlcc] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/nmlcc}
-          \item[This] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/hbpsc-2022}
+          \item[This] \href{https://github.com/thorstenhater/nmlcc}{github.com/thorstenhater/hbpsc-2023}
           \item[License] GPL-3
         \end{description}
       \end{block}
@@ -263,7 +264,7 @@
           While preparing this presentation we identified a series of possible
           enhancements to \nmlcc{} in addition to our preexisting roadmap.
 
-          \emph{Using \c++{} instead of Python} to improve runtime performance for the
+          \emph{Using \cppemph{} instead of Python} to improve runtime performance for the
           generated simulation -- especially as we store connectivity data inside --
           we consider generating \cpp{} code instead of Python.\\[1.5ex]
           \emph{Fine-grained regions} currently we rely on identical region tags for
